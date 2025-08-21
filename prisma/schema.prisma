@@ -8,22 +8,192 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  age       Int?
-  posts     Post[]
+  id       Int        @id @default(autoincrement())
+  name     String
+  email    String     @unique
+  password String     @default("root")
+  // imageUrl  String 
+  role     Role       @relation(fields: [roleId], references: [id])
+  roleId   Int
+  JobOffer JobOffer[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+model Role {
+  id                       Int     @id @default(autoincrement())
+  name                     String
+  canManageUsers           Boolean
+  canManageRoles           Boolean
+  canAddNewOffer           Boolean
+  canEditExistingOffer     Boolean
+  canViewAllOffers         Boolean
+  canManageJobApplications Boolean
+  canViewLogs              Boolean
+  User                     User[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model JobOffer {
+  id                    Int                @id @default(autoincrement())
+  name                  String
+  description           String
+  additionalInformation String?
+  salary                String
+  contractType          ContractType       @relation(fields: [contractTypeId], references: [id])
+  location              Location           @relation(fields: [locationId], references: [id])
+  fullTimeEquivalent    FullTimeEquivalent @relation(fields: [fullTimeEquivalentId], references: [id])
+  workModel             WorkModel
+  mustHaveRequirements  String[]
+  niceToSeeRequirements String[]
+  benefits              Benefit[]
+  published             Boolean
+  validTo               DateTime
+  offerStatus           OfferStatus
+  recruitmentProcess    RecruitmentProcess @relation(fields: [recruitmentProcessId], references: [id])
+  recruiter             User               @relation(fields: [recruiterId], references: [id])
+  applications          Application[]
+
+  contractTypeId       Int
+  locationId           Int
+  fullTimeEquivalentId Int
+  recruitmentProcessId Int
+  recruiterId          Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContractType {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  jobOffer  JobOffer[]
+}
+
+model Location {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  JobOffer JobOffer[]
+}
+
+model FullTimeEquivalent {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  JobOffer JobOffer[]
+}
+
+enum WorkModel {
+  OFFICE
+  HYBRID
+  REMOTE
+}
+
+model Benefit {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  JobOffer JobOffer[]
+}
+
+enum OfferStatus {
+  DRAFT
+  ACTIVE
+  INACTIVE
+  CLOSED
+}
+
+model RecruitmentProcess {
+  id          Int               @id @default(autoincrement())
+  name        String
+  description String
+  steps       RecruitmentStep[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jobOffer    JobOffer[]
+  application Application[]
+}
+
+model RecruitmentStep {
+  id                Int       @id @default(autoincrement())
+  name              String
+  description       String
+  status            String    @unique
+  requiresInterview Boolean?
+  interviewDate     DateTime?
+  RecruitmentProcess RecruitmentProcess[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Application {
+  id                 Int                @id @default(autoincrement())
+  jobOffer           JobOffer           @relation(fields: [jobOfferId], references: [id])
+  firstName          String
+  lastName           String
+  email              String
+  phoneNumber        String
+  attachments        Attachment[]
+  githubLink         String?
+  recruitmentProcess RecruitmentProcess @relation(fields: [recruitmentProcessId], references: [id])
+  status             String
+
+  jobOfferId           Int
+  recruitmentProcessId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Attachment {
+  id            Int         @id @default(autoincrement())
+  originalName  String
+  storedName    String
+  path          String
+  isCV          Boolean
+  application   Application @relation(fields: [applicationId], references: [id])
+  applicationId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Log {
+  id      Int     @id @default(autoincrement())
+  message String
+  trigger String
+  type    LogType
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum LogType {
+  INFO
+  SUCCESS
+  WARNING
+  DANGER
 }
