@@ -14,8 +14,9 @@ model User {
   password String     @default("root")
   // imageUrl  String 
   role     Role       @relation(fields: [roleId], references: [id])
-  roleId   Int
-  JobOffer JobOffer[]
+  roleId   Int        @default(1)
+  jobOffer JobOffer[]
+  deleted  Boolean    @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -32,6 +33,7 @@ model Role {
   canManageJobApplications Boolean
   canViewLogs              Boolean
   User                     User[]
+  deleted                  Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -71,6 +73,7 @@ model ContractType {
   id          Int     @id @default(autoincrement())
   name        String
   description String?
+  deleted     Boolean @default(false)
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -81,6 +84,7 @@ model Location {
   id          Int     @id @default(autoincrement())
   name        String
   description String?
+  deleted     Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -92,6 +96,7 @@ model FullTimeEquivalent {
   id          Int     @id @default(autoincrement())
   name        String
   description String?
+  deleted     Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -109,6 +114,7 @@ model Benefit {
   id          Int     @id @default(autoincrement())
   name        String
   description String?
+  deleted     Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -128,6 +134,7 @@ model RecruitmentProcess {
   name        String
   description String
   steps       RecruitmentStep[]
+  deleted     Boolean           @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -137,13 +144,14 @@ model RecruitmentProcess {
 }
 
 model RecruitmentStep {
-  id                Int       @id @default(autoincrement())
-  name              String
-  description       String
-  status            String    @unique
-  requiresInterview Boolean?
-  interviewDate     DateTime?
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  description        String
+  status             String               @unique
+  requiresInterview  Boolean?
+  interviewDate      DateTime?
   RecruitmentProcess RecruitmentProcess[]
+  deleted            Boolean              @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -160,6 +168,7 @@ model Application {
   githubLink         String?
   recruitmentProcess RecruitmentProcess @relation(fields: [recruitmentProcessId], references: [id])
   status             String
+  deleted            Boolean            @default(false)
 
   jobOfferId           Int
   recruitmentProcessId Int
@@ -176,6 +185,7 @@ model Attachment {
   isCV          Boolean
   application   Application @relation(fields: [applicationId], references: [id])
   applicationId Int
+  deleted       Boolean     @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
