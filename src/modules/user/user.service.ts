@@ -1,6 +1,6 @@
 import prisma from '../../db';
 import { User } from '@prisma/client';
-import jwt from 'jsonwebtoken';
+import { hashPassword } from '@/utils/hash-password'
 
 //  Overloading Signarute
 export function getUser(id: number): Promise<User | null>
@@ -8,8 +8,8 @@ export function getUser(email: string): Promise<User | null>
 
 //  Overloading implementation
 export async function getUser(param: any) {
-  if (typeof param === 'number' ) return await prisma.user.findUnique({ where: { id: param } });
-  if (typeof param === 'string') return await prisma.user.findUnique({ where: { email: param } });
+  if (typeof param === 'number' ) return await prisma.user.findUnique({ where: { id: param, deleted: false } });
+  if (typeof param === 'string') return await prisma.user.findUnique({ where: { email: param, deleted: false } });
 };
 
 export const getAllUsers = async (): Promise<User[]> => {
@@ -17,25 +17,28 @@ export const getAllUsers = async (): Promise<User[]> => {
 };
 
 export const createUser = async (
-  email: string,
   name: string,
-  // roleId: number
+  email: string
 ): Promise<User> => {
   return await prisma.user.create({
     data: {
       name,
       email,
-      // roleId,
+      password: await hashPassword('root')
     },
   });
 };
 
-export const editUser = async (id: number) => {
+export const editUser = async (id: number, name?: string, email?: string, roleId?: number) => {
   return await prisma.user.update({
     where: {
       id: id,
     },
-    data: {},
+    data: {
+      name,
+      email,
+      roleId,
+    },
   });
 };
 
@@ -44,7 +47,9 @@ export const deleteUser = async (id: number) => {
     where: {
       id: id,
     },
-    data: {},
+    data: {
+      deleted: true
+    },
   });
 };
 
