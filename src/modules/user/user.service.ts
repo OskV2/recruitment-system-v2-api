@@ -7,7 +7,7 @@ export function getUser(id: number): Promise<User | null>
 export function getUser(email: string): Promise<User | null>
 
 //  Overloading implementation
-export async function getUser(param: any) {
+export async function getUser(param: number | string) {
   if (typeof param === 'number' ) return await prisma.user.findUnique({ where: { id: param, deleted: false } });
   if (typeof param === 'string') return await prisma.user.findUnique({ where: { email: param, deleted: false } });
 };
