@@ -6,8 +6,14 @@ import { checkIfAuthorized } from "../role/role.controller";
 
 const router = Router();
 
-router.get('/:userId', authenticateToken, );
+router.get('/:benefitId', authenticateToken, benefitController.getBenefit);
 
-router.get('/', authenticateToken, );
+router.get('/', authenticateToken, benefitController.getAllBenefits);
+
+router.post('/', authenticateToken, benefitController.createBenefit);
+
+router.patch('/benefitId', authenticateToken, benefitController.editBenefit);
+
+router.delete('/benefitId', authenticateToken, benefitController.deleteBenefit);
 
 export default router;
