@@ -149,7 +149,7 @@ model RecruitmentStep {
   name               String
   description        String
   status             String               @unique
-  requiresInterview  Boolean?
+  requiresInterview  Boolean
   interviewDate      DateTime?
   RecruitmentProcess RecruitmentProcess[]
   deleted            Boolean              @default(false)

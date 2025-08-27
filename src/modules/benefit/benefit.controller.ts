@@ -11,7 +11,6 @@ export const getBenefit = async (req: Request, res: Response) => {
     console.error(err)
     res.status(400).json({ message: 'Something went wrong' })
   }
-
 }
 
 export const getAllBenefits = async (req: Request, res: Response) => {
