@@ -8,6 +8,7 @@ import benefitRoutes from './modules/benefit/benefit.routes'
 import rsRoutes from './modules/recruitment-step/recruitment-step.routes'
 import rpRoutes from './modules/recruitment-process/recruitment-process.routes'
 import jobOfferRoutes from './modules/job-offer/job-offer.routes'
+import logRoutes from './modules/log/log.routes'
 
 const app = express();
 
@@ -30,5 +31,7 @@ app.use('/api/v1/recruitment-step', rsRoutes)
 app.use('/api/v1/recruitment-process', rpRoutes)
 
 app.use('/api/v1/job-offer', jobOfferRoutes)
+
+app.use('/api/v1/logs', logRoutes)
 
 export default app;
