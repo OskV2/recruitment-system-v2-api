@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import * as benefitService from "./benefit.service";
 
 export const getBenefit = async (req: Request, res: Response) => {

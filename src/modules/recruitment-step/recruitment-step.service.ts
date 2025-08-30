@@ -14,7 +14,6 @@ export const createRecruitmentStep = async (
   description: string,
   status: string,
   requiresInterview: boolean,
-  interviewDate?: Date,
 ) => {
   return await prisma.recruitmentStep.create({
     data: {
@@ -22,7 +21,6 @@ export const createRecruitmentStep = async (
       description,
       status,
       requiresInterview,
-      interviewDate
     }
   })
 }
@@ -33,7 +31,6 @@ export const editRecruitmentStep = async (
   description: string,
   status: string,
   requiresInterview: boolean,
-  interviewDate?: Date,
 ) => {
   return await prisma.recruitmentStep.update({
     where: {
@@ -44,7 +41,6 @@ export const editRecruitmentStep = async (
       description,
       status,
       requiresInterview,
-      interviewDate
     }
   })
 }
