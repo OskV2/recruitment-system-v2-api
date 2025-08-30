@@ -150,7 +150,6 @@ model RecruitmentStep {
   description        String
   status             String               @unique
   requiresInterview  Boolean
-  interviewDate      DateTime?
   RecruitmentProcess RecruitmentProcess[]
   deleted            Boolean              @default(false)
 
@@ -168,7 +167,7 @@ model Application {
   attachments        Attachment[]
   githubLink         String?
   recruitmentProcess RecruitmentProcess @relation(fields: [recruitmentProcessId], references: [id])
-  status             String
+  status             Json
   deleted            Boolean            @default(false)
 
   jobOfferId           Int
