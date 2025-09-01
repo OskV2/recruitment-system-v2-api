@@ -14,7 +14,7 @@ model User {
   password String     
   // imageUrl  String 
   role     Role       @relation(fields: [roleId], references: [id])
-  roleId   Int        @default(1)
+  roleId   Int        @default(0)
   jobOffer JobOffer[]
   deleted  Boolean    @default(false)
 
@@ -24,7 +24,7 @@ model User {
 
 model Role {
   id                       Int     @id @default(autoincrement())
-  name                     String
+  name                     String  @unique
   description String?
   canManageUsers           Boolean
   canManageRoles           Boolean
@@ -148,13 +148,21 @@ model RecruitmentStep {
   id                 Int                  @id @default(autoincrement())
   name               String
   description        String
-  status             String               @unique
+  currentStep        Boolean              @default(false)
   requiresInterview  Boolean
   RecruitmentProcess RecruitmentProcess[]
   deleted            Boolean              @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum ApplicationStatus {
+  NEW
+  IN_PROGRESS
+  REJECTED
+  OFFER_EXTENDED
+  OFFER_ACCEPTED
 }
 
 model Application {
@@ -167,7 +175,7 @@ model Application {
   attachments        Attachment[]
   githubLink         String?
   recruitmentProcess RecruitmentProcess @relation(fields: [recruitmentProcessId], references: [id])
-  status             Json
+  status             ApplicationStatus
   deleted            Boolean            @default(false)
 
   jobOfferId           Int
