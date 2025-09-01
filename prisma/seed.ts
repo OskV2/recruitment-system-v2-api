@@ -4,13 +4,6 @@ import prisma from '../src/db';
 const main = async () => {
   console.log('🌱 Seeding database...');
 
-  await prisma.user.deleteMany();
-  await prisma.role.deleteMany();
-  await prisma.contractType.deleteMany();
-  await prisma.location.deleteMany();
-  await prisma.fullTimeEquivalent.deleteMany();
-  await prisma.benefit.deleteMany();
-
   const roles = await Promise.all([
     prisma.role.upsert({
       where: { name: 'Admin' },
@@ -182,7 +175,7 @@ const main = async () => {
       },
     }),
     prisma.recruitmentStep.upsert({
-      where: { id: 1 },
+      where: { id: 2 },
       update: {},
       create: {
         name: 'Reviewed',
@@ -192,7 +185,7 @@ const main = async () => {
       },
     }),
     prisma.recruitmentStep.upsert({
-      where: { id: 1 },
+      where: { id: 3 },
       update: {},
       create: {
         name: 'HR Screening',
@@ -201,7 +194,7 @@ const main = async () => {
       },
     }),
     prisma.recruitmentStep.upsert({
-      where: { id: 1 },
+      where: { id: 4 },
       update: {},
       create: {
         name: 'Job Interview',
@@ -210,10 +203,10 @@ const main = async () => {
       },
     }),
     prisma.recruitmentStep.upsert({
-      where: { id: 1 },
+      where: { id: 5 },
       update: {},
       create: {
-        name: '',
+        name: 'To be done',
         description: '',
         requiresInterview: false,
       },
