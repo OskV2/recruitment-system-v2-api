@@ -2,7 +2,7 @@ import prisma from '../../db'
 import { ContractType } from '@prisma/client'
 
 export const getContractType = async (id: number) => {
-  return await prisma.benefit.findUnique({ 
+  return await prisma.contractType.findUnique({ 
     where: {
       id: id
     } 
@@ -10,14 +10,14 @@ export const getContractType = async (id: number) => {
 }
 
 export const getAllContractTypes = async () => {
-  return await prisma.benefit.findMany()
+  return await prisma.contractType.findMany()
 }
 
 export const createContractType = async (
   name: string,
   description?: string
 ) => {
-  return await prisma.benefit.create({
+  return await prisma.contractType.create({
     data: {
       name,
       description
@@ -30,7 +30,7 @@ export const editContractType = async (
   name: string,
   description?: string
 ) => {
-  return await prisma.benefit.update({
+  return await prisma.contractType.update({
     where: {
       id: id
     },
@@ -42,7 +42,7 @@ export const editContractType = async (
 }
 
 export const deleteContractType = async (id: number) => {
-  return await prisma.benefit.update({
+  return await prisma.contractType.update({
     where: {
       id: id
     },
