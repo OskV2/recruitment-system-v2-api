@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import * as locationService from "./location.service";
 
 export const getLocation = async (req: Request, res: Response) => {
