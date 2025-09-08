@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors"
 import userRoutes from "./modules/user/user.routes";
 import roleRoutes from './modules/role/role.routes'
 import locationRoutes from './modules/location/location.routes'
@@ -11,6 +12,8 @@ import jobOfferRoutes from './modules/job-offer/job-offer.routes'
 import logRoutes from './modules/log/log.routes'
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
