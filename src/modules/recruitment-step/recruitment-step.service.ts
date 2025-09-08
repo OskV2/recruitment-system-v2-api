@@ -12,14 +12,12 @@ export const getAllRecruitmentSteps = async () => {
 export const createRecruitmentStep = async (
   name: string,
   description: string,
-  status: string,
   requiresInterview: boolean,
 ) => {
   return await prisma.recruitmentStep.create({
     data: {
       name,
       description,
-      status,
       requiresInterview,
     }
   })
@@ -29,7 +27,6 @@ export const editRecruitmentStep = async (
   id: number,
   name: string,
   description: string,
-  status: string,
   requiresInterview: boolean,
 ) => {
   return await prisma.recruitmentStep.update({
@@ -39,7 +36,6 @@ export const editRecruitmentStep = async (
     data: {
       name,
       description,
-      status,
       requiresInterview,
     }
   })
