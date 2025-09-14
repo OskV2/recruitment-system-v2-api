@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as benefitController from "./recruitment-process.controller";
-import { authenticateToken } from "../user/user.controller";
+import { authenticateToken } from "../auth/auth.controller";
 
 const router = Router()
 

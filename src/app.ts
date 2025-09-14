@@ -1,5 +1,8 @@
 import express from "express";
 import cors from "cors"
+import cookieParser from "cookie-parser";
+
+import authRoutes from './modules/auth/auth.routes'
 import userRoutes from "./modules/user/user.routes";
 import roleRoutes from './modules/role/role.routes'
 import locationRoutes from './modules/location/location.routes'
@@ -10,7 +13,6 @@ import rsRoutes from './modules/recruitment-step/recruitment-step.routes'
 import rpRoutes from './modules/recruitment-process/recruitment-process.routes'
 import jobOfferRoutes from './modules/job-offer/job-offer.routes'
 import logRoutes from './modules/log/log.routes'
-import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -21,8 +23,9 @@ app.use(cors({
 
 app.use(cookieParser());
 
-
 app.use(express.json());
+
+app.use('/api/v1/auth', authRoutes)
 
 app.use('/api/v1/users', userRoutes);
 

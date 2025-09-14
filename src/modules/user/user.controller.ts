@@ -1,7 +1,5 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import * as userService from "./user.service";
-import jwt from 'jsonwebtoken';
-import bcrpyt from 'bcrypt'
 
 export const getUser = async (req: Request, res: Response) => {
   console.log(req.headers)
@@ -81,40 +79,4 @@ export const deleteUser = async (req: Request, res: Response) => {
     console.error(err);
     res.status(400).json({ message: `Something went wrong. Could not delete user with id ${id}` });
   }
-}
-
-export const loginUser = async (req: Request, res: Response) => {
-  try {
-    const user = await userService.getUser(req.body.email)
-    if (!user) return res.status(404).json({ message: 'User not found' })
-
-    const match = await bcrpyt.compare(req.body.password, user.password)
-    if (!match) return res.status(401).json({ message: 'incorrect username email or password' })
-
-    const data = {
-      token: jwt.sign({ id: user.id, email: user.email }, 'recruitment-system'),
-      user: user
-    }
-
-    res.status(200).json(data)
-  } catch (err: any) {
-    console.error(err)
-    res.status(400).json({ message: 'Something went wrong' });
-  }
-};
-
-export const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // "Bearer <token>"
-
-  if (!token) return res.status(401).json({ message: "Token missing" });
-
-  jwt.verify(token, 'recruitment-system', (err, decoded) => {
-    if (err) return res.status(403).json({ message: "Invalid token" });
-
-    // attach user info to request for downstream use
-    (req as any).user = decoded;
-    next();
-  });
-
 }

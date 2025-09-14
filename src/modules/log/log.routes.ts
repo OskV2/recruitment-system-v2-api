@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as logController from "./log.controller";
-import { authenticateToken } from "../user/user.controller";
+import { authenticateToken } from "../auth/auth.controller";
 import { checkIfAuthorized } from "../role/role.controller";
 
 const router = Router()
