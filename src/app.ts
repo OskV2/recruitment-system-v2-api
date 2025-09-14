@@ -10,10 +10,17 @@ import rsRoutes from './modules/recruitment-step/recruitment-step.routes'
 import rpRoutes from './modules/recruitment-process/recruitment-process.routes'
 import jobOfferRoutes from './modules/job-offer/job-offer.routes'
 import logRoutes from './modules/log/log.routes'
+import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000", // your Next.js frontend
+  credentials: true,               // allow cookies
+}));
+
+app.use(cookieParser());
+
 
 app.use(express.json());
 
