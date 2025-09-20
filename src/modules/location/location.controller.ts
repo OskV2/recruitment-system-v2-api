@@ -46,7 +46,7 @@ export const deleteLocation = async (req: Request, res: Response) => {
   const id = req.params.locationId
   try {
     locationService.deleteLocation(+id)
-    res.status(200).json(location)
+    res.status(200).json(id)
   } catch (err: any) {
     console.error(err);
     res.status(400).json({ message: 'Something went wrong' })
