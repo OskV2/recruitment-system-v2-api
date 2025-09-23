@@ -1,0 +1,20 @@
+/*
+  Warnings:
+
+  - You are about to drop the column `name` on the `Location` table. All the data in the column will be lost.
+  - You are about to drop the column `name` on the `User` table. All the data in the column will be lost.
+  - Added the required column `country` to the `Location` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `locationDetails` to the `Location` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `firstName` to the `User` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `lastName` to the `User` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- AlterTable
+ALTER TABLE "public"."Location" DROP COLUMN "name",
+ADD COLUMN     "country" TEXT NOT NULL,
+ADD COLUMN     "locationDetails" TEXT NOT NULL;
+
+-- AlterTable
+ALTER TABLE "public"."User" DROP COLUMN "name",
+ADD COLUMN     "firstName" TEXT NOT NULL,
+ADD COLUMN     "lastName" TEXT NOT NULL;

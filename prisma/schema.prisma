@@ -8,15 +8,16 @@ datasource db {
 }
 
 model User {
-  id       Int        @id @default(autoincrement())
-  name     String
-  email    String     @unique
-  password String     
+  id        Int        @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String     @unique
+  password  String
   // imageUrl  String 
-  role     Role       @relation(fields: [roleId], references: [id])
-  roleId   Int        @default(0)
-  jobOffer JobOffer[]
-  deleted  Boolean    @default(false)
+  role      Role       @relation(fields: [roleId], references: [id])
+  roleId    Int        @default(0)
+  jobOffer  JobOffer[]
+  deleted   Boolean    @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -25,7 +26,7 @@ model User {
 model Role {
   id                       Int     @id @default(autoincrement())
   name                     String  @unique
-  description String?
+  description              String?
   canManageUsers           Boolean
   canManageRoles           Boolean
   canAddNewOffer           Boolean
@@ -83,7 +84,8 @@ model ContractType {
 
 model Location {
   id          Int     @id @default(autoincrement())
-  name        String
+  country     String
+  city        String
   description String?
   deleted     Boolean @default(false)
 
