@@ -103,8 +103,9 @@ export const deleteRole = async (req: Request, res: Response) => {
 //  Used as middleare
 export const checkIfAuthorized = (requiredPermission: string) => {  
   return async (req: Request, res: Response, next: NextFunction) => {
+
     try {
-      const { id } = (req as any).user  //  ID of logged user
+      const { id } = (req as any).userId  //  ID of logged user
 
       const user = await userService.getUser(id)
       const role = await roleService.getRole(user!.roleId)  //  I know that user is not null
@@ -113,7 +114,7 @@ export const checkIfAuthorized = (requiredPermission: string) => {
       if (!isAllowed) return res.status(403).json({ message: 'You are not authorized to perform this operation' })    
       next()
     } catch (err: any) {
-      res.status(400).json({ message: 'Something went wrong' })
+      res.status(400).json({ message: 'Something went wrong. Maybe invalid permissions' })
     }
   }
 }

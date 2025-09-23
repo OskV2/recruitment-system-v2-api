@@ -2,14 +2,7 @@ import { Request, Response } from "express";
 import * as userService from "./user.service";
 
 export const getUser = async (req: Request, res: Response) => {
-  console.log(req.headers)
-
   const id = req.params.userId
-
-  if (!id) {
-    res.status(400).json({ message: `No ID was provided in request` });
-    return
-  }
 
   try {
     const user = await userService.getUser(+id)
@@ -37,8 +30,8 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const { email, name } = req.body;
-    const user = await userService.createUser(name, email);
+    const { data } = req.body;
+    const user = await userService.createUser(data);
     res.status(201).json(user);
   } catch (err: any) {
     console.error(err);
@@ -55,8 +48,8 @@ export const editUser = async (req: Request, res: Response) => {
   }
 
   try {
-    const { email, name, roleId } = req.body;
-    const user = await userService.editUser(+id, email, name, roleId);
+    const { data } = req.body;
+    const user = await userService.editUser(+id, data);
     res.status(200).json(user);
   } catch (err: any) {
     console.error(err);

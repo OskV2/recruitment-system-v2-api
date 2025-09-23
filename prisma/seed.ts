@@ -40,11 +40,12 @@ const main = async () => {
 
   const users = await Promise.all([
     prisma.user.upsert({
-      where: { email: 'admin@domain.com' },
+      where: { email: 'mb@domain.com' },
       update: {},
       create: {
-        name: 'Admin user',
-        email: 'admin@domain.com',
+        firstName: 'Maciej',
+        lastName: 'Buszkiewicz',
+        email: 'mb@domain.com',
         password: await hashPassword('root'),
         role: {
           connect: { name: 'Admin' },
@@ -55,11 +56,25 @@ const main = async () => {
       where: { email: 'new@domain.com' },
       update: {},
       create: {
-        name: 'New user',
+        firstName: 'New user',
+        lastName: '',
         email: 'new@domain.com',
         password: await hashPassword('root'),
         role: {
           connect: { name: 'New user' },
+        },
+      },
+    }),
+    prisma.user.upsert({
+      where: { email: 'admin@domain.com' },
+      update: {},
+      create: {
+        firstName: 'Admin',
+        lastName: '',
+        email: 'admin@domain.com',
+        password: await hashPassword('root'),
+        role: {
+          connect: { name: 'Admin' },
         },
       },
     }),
@@ -99,8 +114,49 @@ const main = async () => {
       where: { id: 1 },
       update: {},
       create: {
-        name: 'Los Angeles, CA',
+        country: 'Poland',
+        city: 'Zielona Góra',
+        description:
+          'A bright, medium-sized office surrounded by vineyards and greenery, with a relaxed atmosphere and spaces designed for both focus and collaboration.',
+      },
+    }),
+    prisma.location.upsert({
+      where: { id: 2 },
+      update: {},
+      create: {
+        country: 'Poland',
+        city: 'Kraków',
+        description:
+          'A renovated 19th-century townhouse office blending historical charm with tech hubs.',
+      },
+    }),
+    prisma.location.upsert({
+      where: { id: 3 },
+      update: {},
+      create: {
+        country: 'Poland',
+        city: 'Wrocław',
         description: 'Office in new building',
+      },
+    }),
+    prisma.location.upsert({
+      where: { id: 4 },
+      update: {},
+      create: {
+        country: 'Poland',
+        city: 'Poznań',
+        description:
+          'A mid-sized office near the old town, featuring flexible hot-desking spaces.',
+      },
+    }),
+    prisma.location.upsert({
+      where: { id: 5 },
+      update: {},
+      create: {
+        country: 'Poland',
+        city: 'Warszawa',
+        description:
+          'A sleek glass high-rise office with an open-plan layout and modern coworking areas.',
       },
     }),
   ]);
@@ -198,7 +254,8 @@ const main = async () => {
       update: {},
       create: {
         name: 'Job Interview',
-        description: 'Technical job interview with Project Manager and Development Team Leader',
+        description:
+          'Technical job interview with Project Manager and Development Team Leader',
         requiresInterview: true,
       },
     }),
@@ -216,10 +273,10 @@ const main = async () => {
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

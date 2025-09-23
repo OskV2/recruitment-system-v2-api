@@ -21,9 +21,9 @@ export const getAllLocations = async (req: Request, res: Response) => {
 }
 
 export const createLocation = async (req: Request, res: Response) => {
-  const { name, description } = req.body
+  const { data } = req.body
   try {
-    const location = locationService.createLocation(name, description)
+    const location = locationService.createLocation(data)
     res.status(200).json(location)
   } catch (err: any) {
     res.status(400).json({ message: 'Something went wrong' })
@@ -33,9 +33,9 @@ export const createLocation = async (req: Request, res: Response) => {
 
 export const editLocation = async (req: Request, res: Response) => {
   const id = req.params.locationId
-  const { name, description } = req.body
+  const { data } = req.body
   try {
-    const location = locationService.editLocation(+id, name, description)
+    const location = locationService.editLocation(+id, data)
     res.status(200).json(location)
   } catch (err: any) {
     res.status(400).json({ message: 'Something went wrong' })

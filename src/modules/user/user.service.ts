@@ -1,5 +1,5 @@
 import prisma from '../../db';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { hashPassword } from '@/utils/hash-password'
 
 //  Overloading Signarute
@@ -16,29 +16,21 @@ export const getAllUsers = async (): Promise<User[]> => {
   return await prisma.user.findMany({ where: { deleted: false } });
 };
 
-export const createUser = async (
-  name: string,
-  email: string
-): Promise<User> => {
+export const createUser = async (data: Prisma.UserCreateInput): Promise<User> => {
   return await prisma.user.create({
     data: {
-      name,
-      email,
+      ...data,
       password: await hashPassword('root')
     },
   });
 };
 
-export const editUser = async (id: number, name?: string, email?: string, roleId?: number) => {
+export const editUser = async (id: number, data: Prisma.UserCreateInput) => {
   return await prisma.user.update({
     where: {
       id: id,
     },
-    data: {
-      name,
-      email,
-      roleId,
-    },
+    data
   });
 };
 

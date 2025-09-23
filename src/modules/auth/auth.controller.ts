@@ -22,6 +22,13 @@ export const loginUser = async (req: Request, res: Response) => {
         maxAge: 60 * 60 * 1000,
         path: "/",
       })
+      .cookie("user", user.id, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 60 * 60 * 1000,
+        path: "/",
+      })
       .json(user)
   } catch (err: any) {
     console.error(err)
@@ -33,6 +40,12 @@ export const logoutUser = async (req: Request, res: Response) => {
   try {
     res
       .clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/",
+      })
+      .clearCookie("user", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
