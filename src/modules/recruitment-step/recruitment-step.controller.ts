@@ -24,10 +24,10 @@ export const getAllRecruitmentSteps = async (req: Request, res: Response) => {
 }
 
 export const createRecruitmentStep = async (req: Request, res: Response) => {
-  const { name, description, status } = req.body
+  const data = req.body
   
   try {
-    const rs = rsService.createRecruitmentStep(name, description, status)
+    const rs = rsService.createRecruitmentStep(data)
     res.status(200).json(rs)
   } catch (err: any) {
     console.error(err)
@@ -37,10 +37,10 @@ export const createRecruitmentStep = async (req: Request, res: Response) => {
 
 export const editRecruitmentStep = async (req: Request, res: Response) => {
   const id = req.params.rsId
-  const { name, description, status } = req.body
+  const data = req.body
   
   try {
-    const rs = rsService.editRecruitmentStep(+id, name, description, status)
+    const rs = rsService.editRecruitmentStep(+id, data)
     res.status(200).json(rs)
   } catch (err: any) {
     console.error(err)
