@@ -24,9 +24,9 @@ export const getAllContractTypes = async (req: Request, res: Response) => {
 }
 
 export const createContractType = async (req: Request, res: Response) => {
-  const { name, description } = req.body
+  const data = req.body
   try {
-    const ct = await contractTypeService.createContractType(name, description)
+    const ct = await contractTypeService.createContractType(data)
     res.status(200).json(ct)
   } catch (err:any) {
     console.error(err)
@@ -37,12 +37,13 @@ export const createContractType = async (req: Request, res: Response) => {
 
 export const editContractType = async (req: Request, res: Response) => {
   const id = req.params.ctId
-  const { name, description } = req.body
+  const data = req.body
+
   try {
-    const ct = await contractTypeService.editContractType(+id, name, description)
+    const ct = await contractTypeService.editContractType(+id, data)
     res.status(200).json(ct)
   } catch (err:any) {
-    console.error(err)
+    // console.error(err)
     res.status(400).json({ message: 'Something went wrong' })
   }
 

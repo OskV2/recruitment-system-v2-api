@@ -21,7 +21,7 @@ export const getAllLocations = async (req: Request, res: Response) => {
 }
 
 export const createLocation = async (req: Request, res: Response) => {
-  const { data } = req.body
+  const data = req.body
   try {
     const location = locationService.createLocation(data)
     res.status(200).json(location)
@@ -33,7 +33,11 @@ export const createLocation = async (req: Request, res: Response) => {
 
 export const editLocation = async (req: Request, res: Response) => {
   const id = req.params.locationId
-  const { data } = req.body
+  const data = req.body
+
+  console.log(req.body)
+  console.log(data)
+
   try {
     const location = locationService.editLocation(+id, data)
     res.status(200).json(location)
