@@ -5,7 +5,7 @@ export const getRecruitmentStep = async (req: Request, res: Response) => {
   const id = req.params.rsId
 
   try {
-    const rs = rsService.getRecruitmentStep(+id)
+    const rs = await rsService.getRecruitmentStep(+id)
     res.status(200).json(rs)
   } catch (err: any) {
     console.error(err)
@@ -15,7 +15,7 @@ export const getRecruitmentStep = async (req: Request, res: Response) => {
 
 export const getAllRecruitmentSteps = async (req: Request, res: Response) => {
   try {
-    const rs = rsService.getAllRecruitmentSteps()
+    const rs = await rsService.getAllRecruitmentSteps()
     res.status(200).json(rs)
   } catch (err: any) {
     console.error(err)
@@ -27,7 +27,7 @@ export const createRecruitmentStep = async (req: Request, res: Response) => {
   const data = req.body
   
   try {
-    const rs = rsService.createRecruitmentStep(data)
+    const rs = await rsService.createRecruitmentStep(data)
     res.status(200).json(rs)
   } catch (err: any) {
     console.error(err)
@@ -40,7 +40,7 @@ export const editRecruitmentStep = async (req: Request, res: Response) => {
   const data = req.body
   
   try {
-    const rs = rsService.editRecruitmentStep(+id, data)
+    const rs = await rsService.editRecruitmentStep(+id, data)
     res.status(200).json(rs)
   } catch (err: any) {
     console.error(err)
@@ -52,7 +52,7 @@ export const deleteRecruitmentStep = async (req: Request, res: Response) => {
   const id = req.params.rsId
 
   try {
-    const rs = rsService.deleteRecruitmentStep(+id)
+    const rs = await rsService.deleteRecruitmentStep(+id)
     res.status(200).json(rs)
   } catch (err: any) {
     console.error(err)

@@ -5,14 +5,14 @@ import { checkIfAuthorized } from "../role/role.controller";
 
 const router = Router()
 
-router.get('/rsId', authenticateToken, rsController.getRecruitmentStep)
+router.get('/:rsId', authenticateToken, rsController.getRecruitmentStep)
 
 router.get('/', authenticateToken, rsController.getAllRecruitmentSteps)
 
 router.post('/', authenticateToken, rsController.createRecruitmentStep)
 
-router.patch('/rsId', authenticateToken, rsController.editRecruitmentStep)
+router.patch('/:rsId', authenticateToken, rsController.editRecruitmentStep)
 
-router.delete('/rsId', authenticateToken, rsController.deleteRecruitmentStep)
+router.delete('/:rsId', authenticateToken, rsController.deleteRecruitmentStep)
 
 export default router
