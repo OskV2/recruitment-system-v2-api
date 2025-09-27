@@ -133,11 +133,11 @@ enum OfferStatus {
 }
 
 model RecruitmentProcess {
-  id          Int               @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   name        String
   description String
-  steps       RecruitmentStep[]
-  deleted     Boolean           @default(false)
+  steps       ProcessStep[]
+  deleted     Boolean       @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -147,16 +147,26 @@ model RecruitmentProcess {
 }
 
 model RecruitmentStep {
-  id                 Int                  @id @default(autoincrement())
+  id                 Int           @id @default(autoincrement())
   name               String
   description        String
-  currentStep        Boolean              @default(false)
+  currentStep        Boolean       @default(false)
   requiresInterview  Boolean
-  RecruitmentProcess RecruitmentProcess[]
-  deleted            Boolean              @default(false)
+  RecruitmentProcess ProcessStep[]
+  deleted            Boolean       @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ProcessStep {
+  process   RecruitmentProcess @relation(fields: [processId], references: [id])
+  processId Int
+  step      RecruitmentStep    @relation(fields: [stepId], references: [id])
+  stepId    Int
+  order     Int
+
+  @@id([processId, stepId])
 }
 
 enum ApplicationStatus {
