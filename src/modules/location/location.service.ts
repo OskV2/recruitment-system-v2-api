@@ -50,3 +50,14 @@ export const deleteLocation = async (id: number) => {
     }
   })
 }
+
+export const deleteManyLocations = async (ids: number[]) => {
+  return await prisma.location.updateMany({
+    where: { 
+      id: { 
+        in: ids 
+      } 
+    },
+    data: { deleted: true }
+  })
+}
