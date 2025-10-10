@@ -24,10 +24,19 @@ export const getAllRecruitmentProcesses = async (req: Request, res: Response) =>
 }
 
 export const createRecruitmentProcess = async (req: Request, res: Response) => {
-  const data = req.body
+  const { name, description, steps } = req.body
 
   try {
-    const recruitmentProcess = await rpService.createRecruitmentProcess(data)
+    const recruitmentProcess = await rpService.createRecruitmentProcess({
+      name,
+      description,
+      steps: {
+        create: steps.map((step: any, index: number) => ({
+          step: { connect: { id: step.id } },
+          order: index
+        }))
+      }
+    })
     res.status(200).json(recruitmentProcess)
   } catch (err: any) {
     console.error(err)
