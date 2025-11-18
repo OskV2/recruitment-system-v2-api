@@ -15,7 +15,7 @@ model User {
   password  String
   // imageUrl  String 
   role      Role       @relation(fields: [roleId], references: [id])
-  roleId    Int        @default(0)
+  roleId    Int        
   jobOffer  JobOffer[]
   deleted   Boolean    @default(false)
 

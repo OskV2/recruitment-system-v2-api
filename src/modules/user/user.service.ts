@@ -17,10 +17,15 @@ export const getAllUsers = async (): Promise<User[]> => {
 };
 
 export const createUser = async (data: Prisma.UserCreateInput): Promise<User> => {
+  const defaultRole = await prisma.role.findUnique({
+    where: { name: 'New user' }
+  });
+
   return await prisma.user.create({
     data: {
       ...data,
-      password: await hashPassword('root')
+      password: await hashPassword('root'),
+      role: { connect: { id: defaultRole!.id } }
     },
   });
 };

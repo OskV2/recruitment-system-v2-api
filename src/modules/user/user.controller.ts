@@ -30,7 +30,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const { data } = req.body;
+    const data = req.body;
     const user = await userService.createUser(data);
     res.status(201).json(user);
   } catch (err: any) {
